@@ -22,3 +22,9 @@ In the `www` directory, run:
 ```
 npm run start
 ```
+
+
+### Takeaways/Learning
+
+1. wasm-bindgen - allows JS/wasm to communicate with strings, JS objects, classes, etc, as opposed to purely integers and floats.
+    1. Ex. https://rustwasm.github.io/wasm-bindgen/print.html#srclibrs-1
