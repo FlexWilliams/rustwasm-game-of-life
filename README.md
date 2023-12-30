@@ -20,5 +20,5 @@ wasm-pack build
 In the `www` directory, run:
 
 ```
-npm install && npm run start
+npm run start
 ```
