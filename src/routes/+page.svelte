@@ -1,5 +1,5 @@
 <script lang="ts">
-	import init, { Cell, Universe } from 'game-of-life-wasm';
+	import init, { Universe } from 'game-of-life-wasm';
 	import { onMount } from 'svelte';
 
 	let wasm: any; // TODO: add type of `InitOutput`
@@ -32,13 +32,19 @@
 		return row * width + column;
 	}
 
+	function isBitSet(cellIndex: number, cells: Uint8Array): boolean {
+		const byte = Math.floor(cellIndex / 8);
+		const mask = 1 << cellIndex % 8;
+		return (cells[byte] & mask) === mask;
+	}
+
 	function drawCells(
 		context: CanvasRenderingContext2D,
 		width: number,
 		height: number,
 		cellsPointer: number
 	) {
-		const cells = new Uint8Array(wasm.memory.buffer, cellsPointer, width * height);
+		const cells = new Uint8Array(wasm.memory.buffer, cellsPointer, (width * height) / 8);
 
 		context.beginPath();
 
@@ -46,7 +52,8 @@
 			for (let col = 0; col < width; col++) {
 				const idx = getIndex(row, col, width);
 
-				context.fillStyle = cells[idx] === Cell.Dead ? DEAD_COLOR : ALIVE_COLOR;
+				// This is updated!
+				context.fillStyle = isBitSet(idx, cells) ? ALIVE_COLOR : DEAD_COLOR;
 
 				context.fillRect(
 					col * (CELL_SIZE + 1) + 1,
