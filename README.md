@@ -45,3 +45,7 @@ Visit: [http://localhost:5173](http://localhost:5173)
 3. Getting { memory } module to load since now using the `no bundler` strategy. See link below (kudos!):
    1. https://lionturkey.github.io/posts/rustwasm/rustwasm.html
    2. "In order to access memory used by Wasm without npm, we need to save the output of the init() function"
+
+### Future TODOs:
+
+1. Implement [Hashlife](https://en.wikipedia.org/wiki/Hashlife)
