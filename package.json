@@ -13,7 +13,8 @@
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"wasm": "wasm-pack build ./game-of-life-wasm --target web"
+		"wasm": "wasm-pack build ./game-of-life-wasm --target web",
+		"wasm-test": "cd ./game-of-life-wasm  && wasm-pack test --firefox --headless"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
