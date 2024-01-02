@@ -70,7 +70,7 @@
 	onMount(async () => {
 		wasm = await init();
 
-		const universe = Universe.new();
+		const universe = Universe.new(64, 64);
 		const width = universe.width();
 		const height = universe.height();
 		const cellsPointer = universe.cells();
