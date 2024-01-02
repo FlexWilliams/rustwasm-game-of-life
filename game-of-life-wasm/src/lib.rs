@@ -8,11 +8,6 @@ use fixedbitset::FixedBitSet;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-extern "C" {
-    fn alert(s: &str);
-}
-
-#[wasm_bindgen]
 pub struct Universe {
     width: u32,
     height: u32,
@@ -70,17 +65,25 @@ impl Universe {
         self.width
     }
 
+    pub fn set_width(&mut self, width: u32) {
+        self.width = width;
+    }
+
     pub fn height(&self) -> u32 {
         self.height
+    }
+
+    pub fn set_height(&mut self, height: u32) {
+        self.height = height;
     }
 
     pub fn cells(&self) -> *const u32 {
         self.cells.as_slice().as_ptr()
     }
 
-    pub fn new() -> Universe {
-        let width = 64;
-        let height = 64;
+    pub fn new(width: u32, height: u32) -> Universe {
+        let width = width;
+        let height = height;
 
         let size = (width * height) as usize;
         let mut cells = FixedBitSet::with_capacity(size);
@@ -93,6 +96,30 @@ impl Universe {
             width,
             height,
             cells,
+        }
+    }
+}
+
+impl Universe {
+    /// Get the dead and alive values of the entire universe.
+    pub fn get_cells(&self) -> FixedBitSet {
+        self.cells.clone()
+    }
+
+    pub fn get_universe_length(&self) ->  usize {
+        self.cells.len()
+    }
+
+    pub fn clear_bits(&mut self) {
+        self.cells.clear();
+    }
+
+    /// Set cells to be alive in a universe by passing the row and column
+    /// of each cell as an array.
+    pub fn set_cells(&mut self, cells: &[(u32, u32)]) {
+        for (row, col) in cells.iter().cloned() {
+            let idx = self.get_index(row, col);
+            self.cells.set(idx, true)
         }
     }
 }
