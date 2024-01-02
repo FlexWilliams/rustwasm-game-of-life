@@ -6,19 +6,10 @@ extern crate fixedbitset;
 use fixedbitset::FixedBitSet;
 
 use wasm_bindgen::prelude::*;
-use std::fmt;
 
 #[wasm_bindgen]
 extern "C" {
     fn alert(s: &str);
-}
-
-#[wasm_bindgen]
-#[repr(u8)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Cell {
-    Dead = 0,
-    Alive = 1
 }
 
 #[wasm_bindgen]
@@ -103,24 +94,5 @@ impl Universe {
             height,
             cells,
         }
-    }
-
-    pub fn render(&self) -> String {
-        self.to_string()
-    }
-}
-
-
-impl fmt::Display for Universe {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        for line in self.cells.as_slice().chunks(self.width as usize) {
-            for &cell in line {
-                let symbol = if cell == 0 { '◻' } else { '◼' };
-                write!(f, "{}", symbol)?;
-            }
-            write!(f, "\n")?;
-        }
-
-        Ok(())
     }
 }
